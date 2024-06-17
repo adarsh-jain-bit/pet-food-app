@@ -24,7 +24,7 @@ export const SubSectionWrapper = styled(Box)`
 export const VendorPanelSectionWrapper = styled(Box)`
   width: 100%;
   height: 100%;
-  padding: ${SPACING.SIZE_24};
+  // padding: ${SPACING.SIZE_24};
 `;
 
 export const StyledButton = styled(Button)`

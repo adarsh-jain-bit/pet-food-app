@@ -1,24 +1,27 @@
+import { borderRadius, padding, width } from "@mui/system";
 
 
 export const styles = {
     swiper  : {
         width: "100%",
-        height: "100%",
+        padding : "2em!important",
     },
-    swiperSlide  : {
-        // textAlign: "center",
+    swiperSlide  : {  
         fontSize: "18px",
         background: "#fff",
-      
-        /* Center slide text vertically */
+      maxHeight : "50vh",
         display: "flex",
+        width : "100%" ,
         justifyContent: "center",
         alignItems: "center",
+        objectFit : "cover",
+        borderRadius : "30px",
+        
       },
       swiperSlideImg : {
-        display: "block",
         width: "100%",
-        height: "100%",
+        height: "100%!important",
         objectFit: "cover",
+        borderRadius : "30px",
       }
 }

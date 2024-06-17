@@ -16,6 +16,7 @@ export const COLORS = {
     WHITE: "#FFF",
     GRAY_05: "#eee",
     GRAY_10: "#e0e0e0",
+    GRAY_20: "#94A1C1",
     GRAY_30: "#333",
     GRAY_50: "rgba(165, 165, 165, 0.5)",
     GRAY_60: "#626262",

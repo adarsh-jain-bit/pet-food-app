@@ -104,7 +104,7 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
   return (  
   <>
    
-    <AppBar  style={styles.container} sx={{zIndex : 12000}}>
+    <AppBar  style={styles.container} sx={{zIndex : 12000 , position : "sticky!important"  }} >
     <Container maxWidth={theme.breakpoints.values.xl} >
       <Toolbar disableGutters>
       <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, width: '10%' }}>

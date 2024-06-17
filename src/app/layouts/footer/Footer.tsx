@@ -15,6 +15,7 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import theme from '@src/theme';
 import Image from 'next/image';
 import { SvgIconComponent } from '@mui/icons-material';
+import { generateRandomKey } from '@src/utiles/KeyGenerater';
 const footer = () => {
   interface Icon {
     id: number;
@@ -112,8 +113,8 @@ const footer = () => {
           {heading}
           </Typography>
             <List >
-            {pages.map((item , index ) => (
-                  <ListItem key={index}>
+            {pages.map((item ) => (
+                  <ListItem key={generateRandomKey()}>
                     <ListItemText primary={item} />
                   </ListItem>
                 ))}

@@ -10,9 +10,7 @@ width: 100%;
 color : ${COLORS.GLOBAL.WHITE};
 &::before{
     content: '';
-    position: absolute;
-    left: 0;
-    top: 100px;
+
     height: 1px;
     width: 100%;
     background: #AFAFB6;
