@@ -21,10 +21,10 @@ export const SubSectionWrapper = styled(Box)`
   padding: ${SPACING.SIZE_32} 0;
 `;
 
-export const VendorPanelSectionWrapper = styled(Box)`
+export const SmallSectionWrapper = styled(Box)`
   width: 100%;
   height: 100%;
-  // padding: ${SPACING.SIZE_24};
+   padding: ${SPACING.SIZE_24};
 `;
 
 export const StyledButton = styled(Button)`
@@ -109,6 +109,6 @@ export const scaleUpTransition = () => ({
   transition: "transform 0.3s ease-in-out",
   "&:hover": {
     transition: "transform .3s ease-in-out",
-    transform: "scale(1.2)",
+    transform: "scale(1.15)",
   },
 });

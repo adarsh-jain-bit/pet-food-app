@@ -16,7 +16,7 @@ const Card = () => {
      <Stack alignItems="Center">
      <Image src={"/assets/slider/slider1.png"} alt={"item.title"} height={100} width={100}  />
      </Stack>
-      <Box mt={2}>
+      <Box mt={1}>
         <h5  >{"Zupreem Fruit Blend Bird Food for Small Birds"}</h5>
         <p>{"item.brand"}</p>
         <Typography variant="caption" display="flex" alignItems="center" my={2}><Rating name="disabled" value={3} readOnly size="small" />

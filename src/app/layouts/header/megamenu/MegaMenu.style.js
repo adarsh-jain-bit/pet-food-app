@@ -21,7 +21,7 @@ smallContainer : {
     height : "fit-content",
     padding : `${SPACING.SIZE_16} ${SPACING.SIZE_16}`,
     position : "absolute",
-  top : "100px",
+  top : "69px",
   borderRadius : "0px 0px 10px 10px"
 }
 }

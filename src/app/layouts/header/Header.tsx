@@ -11,17 +11,29 @@ import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import MenuItem from '@mui/material/MenuItem';
-import styled from "styled-components";
-import InputBase from '@mui/material/InputBase';
-import { alpha, useTheme } from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
 import MegaMenu from "./megamenu/MegaMenu"
-import SearchIcon from '@mui/icons-material/Search';
 import Image from 'next/image';
 import {styles } from "./header.style"
 import { COLORS } from "../../../lib/constants/colors";
 import {  FONT_WEIGHT } from '../../../lib/constants/typography';
 import SimpleBackdrop from '@src/components/common/BackDrop';
+import { Autocomplete, Badge, Drawer, InputAdornment, Stack, TextField } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import Link from 'next/link';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import Cart from '@src/components/Cart/Cart';
+export type CartItemType = {
+  id: number;
+  category: string;
+  description: string;
+  image: string;
+  price: number;
+  title: string;
+  amount: number;
+};
 const Header = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
@@ -37,45 +49,43 @@ const handleOpen = () => {
   setOpen(true);
 };
 
-const Search = styled('div')(() => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(3),
-    width: 'auto',
-  },
-}));
 
-const SearchIconWrapper = styled('div')(() => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
+const top100Films = [
+  { title: 'The Shawshank Redemption', year: 1994 },
+  { title: 'The Godfather', year: 1972 },
+  { title: 'The Godfather: Part II', year: 1974 },
+  { title: 'The Dark Knight', year: 2008 },
+  { title: '12 Angry Men', year: 1957 },
+  { title: "Schindler's List", year: 1993 },
+  { title: 'Pulp Fiction', year: 1994 },
+  { title: 'Forrest Gump', year: 1994 },
+  { title: 'Inception', year: 2010 },
+  { title: 'City of God', year: 2002 },
+  { title: 'Se7en', year: 1995 },
+  { title: 'The Silence of the Lambs', year: 1991 },
+  { title: "It's a Wonderful Life", year: 1946 },
+  { title: 'Life Is Beautiful', year: 1997 },
+  { title: 'The Usual Suspects', year: 1995 },
+  { title: 'Léon: The Professional', year: 1994 },
+  { title: 'Spirited Away', year: 2001 },
+  { title: 'Saving Private Ryan', year: 1998 },
+  { title: 'Once Upon a Time in the West', year: 1968 },
+  { title: 'American History X', year: 1998 },
+  { title: 'Interstellar', year: 2014 },
+  { title: 'Casablanca', year: 1942 },
+  { title: 'City Lights', year: 1931 },
+  { title: 'Psycho', year: 1960 },
+  { title: 'The Green Mile', year: 1999 },
+  { title: 'The Intouchables', year: 2011 },
+  { title: 'Modern Times', year: 1936 },
+  { title: 'Raiders of the Lost Ark', year: 1981 },
+  { title: 'Rear Window', year: 1954 },
+  { title: 'The Pianist', year: 2002 },
+  { title: 'Snatch', year: 2000 },
+  { title: '3 Idiots', year: 2009 },
+  { title: 'Monty Python and the Holy Grail', year: 1975 },
+];
 
-const StyledInputBase = styled(InputBase)(() => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
-  },
-}));
   const pages = ['Dog', 'Cat', 'Small Animal' ,"birds" , "Fishes & turtle" , "Learn" , "Retail Store" ];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -94,11 +104,48 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   }; 
-  
+  let auth :boolean = false;
   const handleMenuClick = (page : String) => {
     setNavLinkValue(page)
     handleOpen()
   };
+// cart function
+
+const [cartOpen, setCartOpen] = useState(false);
+const [cartItems, setCartItems] = useState<CartItemType[]>([]);
+
+const getTotalItems = (items: CartItemType[]) =>
+  items.reduce((acc, item) => acc + item.amount, 0);
+
+const handleAddToCart = (clickedItem: CartItemType) => {
+  setCartItems((prev) => {
+    const isItemInCart = prev.find((item) => item.id === clickedItem.id);
+
+    if (isItemInCart) {
+      return prev.map((item) =>
+        item.id === clickedItem.id
+          ? { ...item, amount: item.amount + 1 }
+          : item
+      );
+    }
+
+    return [...prev, { ...clickedItem, amount: 1 }];
+  });
+};
+
+const handleRemoveFromCart = (id: number) => {
+  setCartItems((prev) =>
+    prev.reduce((acc, item) => {
+      if (item.id === id) {
+        if (item.amount === 1) return acc;
+        return [...acc, { ...item, amount: item.amount - 1 }];
+      } else {
+        return [...acc, item];
+      }
+    }, [] as CartItemType[])
+  );
+};
+
 
 
   return (  
@@ -109,7 +156,7 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
       <Toolbar disableGutters>
       <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, width: '10%' }}>
     <Image 
-        src={`/assets/mainlogo.png`} 
+        src={`/assets/mainlogo.webp`} 
         layout="intrinsic"
         width={218}
         height={80} 
@@ -172,21 +219,29 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
           ))}
         </Box>
 
-        <Box sx={{ flexGrow: 0, display : "flex" , width: "30%" , justifyContent:"space-between"}}>
-        <Search>
-          <Box sx={{display  :"flex", alignItems : "center"}}>
-
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Box>
-          </Search>
-      
-          <Tooltip title="Open settings">
+        <Box sx={{ flexGrow: 0, display : "flex" , width: "30%" , gap : 2 , alignItems: "center"}}>
+        <Autocomplete
+        freeSolo
+        id="free-solo-2-demo"
+        disableClearable
+        sx={{maxWidth : "100%" , width : "300px" ,".css-zf8tz9-MuiInputBase-root-MuiOutlinedInput-root" : {border : `1px solid ${COLORS.PRIMARY.main}`}}}
+        options={top100Films.map((option) => option.title)}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            hiddenLabel
+            size='small'
+            placeholder='search for toys'
+            InputProps={{
+              ...params.InputProps,
+              type: 'search',
+              endAdornment: <SearchIcon position="end"  sx={{color : COLORS.PRIMARY.main}}/>,
+            }}
+          />
+        )}
+      />
+      {auth ? <>
+        <Tooltip title="Open settings">
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
               <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
             </IconButton>
@@ -213,6 +268,29 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
               </MenuItem>
             ))}
           </Menu>
+          </>
+      :
+      <>
+      
+      <Stack display="flex" alignItems="center">
+      <Link href={"/account/login"}><AccountCircleIcon fontSize='large' sx={{color:COLORS.PRIMARY.main}} /></Link>
+      <Box  style={styles.StyledButton} onClick={() => setCartOpen(true)}>
+        <Badge badgeContent={getTotalItems(cartItems)} color="error">
+          <ShoppingCartIcon sx={{color : COLORS.PRIMARY.main}} fontSize='large' />
+        </Badge>
+      </Box> 
+      </Stack>
+      </>
+      }
+           <Drawer anchor="right" open={cartOpen} onClose={() => setCartOpen(false)}>
+        <Cart
+          cartItems={cartItems}
+          addToCart={handleAddToCart}
+          removeFromCart={handleRemoveFromCart}
+        />
+      </Drawer>
+
+     
           
         </Box>
       </Toolbar>

@@ -42,20 +42,20 @@ export const createTypography = () => ({
   h1: {
     fontFamily: "'Playfair Display', serif",
     fontWeight: 700,
-    lineHeight: "74.73px",
+    lineHeight: "28px",
     fontSize: "39px",
   },
   h2: {
     fontFamily: "'Playfair Display', serif",
     fontWeight: 700,
-    fontSize: "31px",
+    fontSize: "25px",
     lineHeight: "59.48px",
   },
   h3: {
     fontFamily: "'Playfair Display', serif",
     fontWeight: 700,
     fontSize: "25px",
-    lineHeight: "47.28px",
+    lineHeight: "30px",
   },
   h4: {
     fontFamily: "'Playfair Display', serif",
@@ -67,7 +67,7 @@ export const createTypography = () => ({
     fontFamily: "'Playfair Display', serif",
     fontWeight: 700,
     fontSize: "16px",
-    lineHeight: "30.5px",
+    lineHeight: "30px",
   },
   h6: {
     fontFamily: "'Playfair Display', serif",

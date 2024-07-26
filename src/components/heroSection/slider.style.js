@@ -4,7 +4,6 @@ import { borderRadius, padding, width } from "@mui/system";
 export const styles = {
     swiper  : {
         width: "100%",
-        padding : "2em!important",
     },
     swiperSlide  : {  
         fontSize: "18px",

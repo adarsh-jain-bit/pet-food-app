@@ -5,7 +5,8 @@ import "./globals.css";
 import Header from "./layouts/header/Header";
 import Footer from "./layouts/footer/Footer";
 import AppProviders from "@components/global/provider/AppProvider";
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -21,6 +22,7 @@ export default function RootLayout({
       <body>
         <AppProviders>
         <Header/>
+        <ToastContainer />
       {children}
       <Footer/>
         </AppProviders>

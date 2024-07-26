@@ -93,19 +93,8 @@ const footer = () => {
       <Footer>
     <Content >
       <Top >
-      <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, width: '10%' }}>
-    <Image 
-        src={`/assets/mainlogo.png`} 
-        layout="intrinsic"
-        width={218}
-        height={80} 
-        priority 
-        alt='logo'
-        style={{ maxWidth: '100%', height: 'auto'  }} // Add this line to maintain aspect ratio
-    />
-</Box>
       </Top>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} >
         {demoItems.map(({heading  , pages , id }: DemoItems) => (
        <>
           <Grid item xs={6} md={3} lg={2} key={String(id)}>

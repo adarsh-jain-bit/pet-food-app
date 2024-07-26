@@ -8,7 +8,7 @@ const BrandSection = () => {
   return (
    <>
    <Typography variant='h1' textAlign="center">Sheba: Irresistible Delights for Your Cat</Typography>
-    <Grid container spacing={2} justifyContent="center">
+    <Grid container spacing={2} justifyContent="center" mt={1}>
    {cardData.map(() => (
     <>
      <Grid item xs={2}>
