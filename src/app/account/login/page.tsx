@@ -1,8 +1,7 @@
 "use client"
-import { Button, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import React,{useState} from 'react'
 import {LoginWrapper} from "./login.style"
-import { SectionWrapper } from '@src/theme/Global.styles'
 import { MuiTelInput } from 'mui-tel-input'
 import OTPButton from '@src/components/common/modal/OTPModal'
 const login = () => {

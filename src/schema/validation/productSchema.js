@@ -14,7 +14,7 @@ const productSchema = Yup.object().shape({
   product_category: Yup.string().required('Category is required'),
   product_brand: Yup.string().required('Brand is required'),
   stock: Yup.number().min(0, 'Stock must be a positive number').required('Stock is required'),
-  // images: Yup.array().of(Yup.string().url('Invalid URL')).required('At least one image is required'),
+  images: "",
   // reviews: Yup.array().of(reviewSchema),
 });
 

@@ -36,8 +36,8 @@ export default function Slider() {
             <Image 
               src={`${props}`} 
               layout="intrinsic"
-              width={500}
-              height={500} 
+              width={1000}
+              height={1000} 
               priority 
               alt={`Slide1`}
               style={styles.swiperSlideImg}

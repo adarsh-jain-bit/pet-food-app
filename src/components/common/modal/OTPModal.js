@@ -22,13 +22,13 @@ import { toast } from "react-toastify";
 import { useRouter } from 'next/navigation';
 
 export default function OTPButton({ value }) {
-  // console.log(value)
+  console.log(value)
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const [open, setOpen] = useState(false);
   const [loading , setLoading] = useState(false)
   const [otp, setOtp] = useState("");
-  const [phone, setPhone] = useState(value);
+  // const [phone, setPhone] = useState(value);
   const [confirmationResult, setConfirmationResult] = useState("");
   const router = useRouter();
   useEffect(() => {
@@ -54,8 +54,8 @@ export default function OTPButton({ value }) {
     setOpen(true);
     setLoading(true)
     try {
-      const phoneNumber = await phone.replace(/\s/g, "");
-      // console.log(phone ,phoneNumber);
+      const phoneNumber = await value.replace(/\s/g, "");
+      console.log(phoneNumber);
       const appVerifier = window.recaptchaVerifier;
        let confirmation = await signInWithPhoneNumber(auth, phoneNumber, appVerifier)
       toast.success("OTP Successfully Sent!", {

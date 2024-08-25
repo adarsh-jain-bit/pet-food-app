@@ -1,34 +1,50 @@
-// components/ImageUpload.js
-import Image from 'next/image';
+"use client"
 import { useState } from 'react';
+import Image from 'next/image';
 
-const ImageUpload = ({ onImageUpload }) => {
-  const [image, setImage] = useState(null);
+const ImageUpload = ({onImageUpload}) => {
+  const [file, setFile] = useState(null);
   const [imageUrl, setImageUrl] = useState('');
 
-  const handleChange = (e) => {
-    setImage(e.target.files[0]);
+  const handleFileChange = (e) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setFile(reader.result); 
+    };
+    reader.readAsDataURL(e.target.files[0]);
   };
 
-  const handleUpload = async () => {
-    const formData = new FormData();
-    formData.append('file', image);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(file);
 
-    const response = await fetch('/api/imageupload', {
-      method: 'POST',
-      body: formData,
-    });
+    try {
+      const response = await fetch('/api/uploadimage', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ data: file }), 
+      });
 
-    const data = await response.json();
-    setImageUrl(data.url);
-    onImageUpload(data.url); // Pass the image URL to the parent component
+      const data = await response.json();
+
+      if (response.ok) {
+        setImageUrl(data.url);
+        onImageUpload(data.url)
+      } else {
+        console.error('Error uploading the file:', data.error);
+      }
+    } catch (error) {
+      console.error('Error uploading the file:', error);
+    }
+    
   };
 
   return (
     <div>
-      <input type="file" onChange={handleChange} />
-      <button type="button" onClick={handleUpload}>Upload Image</button>
-      {imageUrl && <Image src={imageUrl} alt="Uploaded Image" />}
+      <input type="file" onChange={handleFileChange} />
+      <button type="submit" onClick={handleSubmit}>Upload</button>
     </div>
   );
 };

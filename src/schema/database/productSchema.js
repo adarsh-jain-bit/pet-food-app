@@ -58,10 +58,10 @@ const productSchema = new mongoose.Schema({
     required: true,
     min: 0,
   },
-  // images: {
-  //   type: [String],
-  //   required: true,
-  // },
+  images: {
+    type: [String],
+    required: true,
+  },
   // reviews: [reviewSchema],
   createdAt: {
     type: Date,

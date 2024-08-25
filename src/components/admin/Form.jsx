@@ -1,5 +1,6 @@
-"use client"
+"use client";
 import { useState } from 'react';
+import ImageUpload from './ImageUpload';
 
 export default function Form() {
   const [form, setForm] = useState({
@@ -10,18 +11,23 @@ export default function Form() {
     product_category: '',
     product_brand: '',
     stock: 0,
-    // images: null
+    discount : 0,
+    images: [],
   });
 
-
   const handleChange = (e) => {
-    const { name, value, type, files } = e.target;
+    const { name, value, type } = e.target;
     setForm({
       ...form,
-      [name]: type === 'number' ? parseFloat(value) : type === 'file' ? files[0] : value,
+      [name]: type === 'number' ? parseFloat(value) : value,
     });
   };
 
+  const handleImageUpload = (imageUrl) => {
+    console.log(imageUrl)
+    setForm((prevForm) => ({ ...prevForm, images: [...prevForm.images, imageUrl] }));
+  };
+console.log(form)
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -33,28 +39,36 @@ export default function Form() {
     formData.append('product_category', form.product_category);
     formData.append('product_brand', form.product_brand);
     formData.append('stock', form.stock);
-console.log(formData)
+    formData.append('discount', form.discount);
+    form.images.forEach((imageUrl) => {
+      formData.append('images', imageUrl);
+    });
+  
+
+console.log(form)
     try {
       const res = await fetch('/api/products', {
         method: 'POST',
         body: formData,
       });
-    console.log("res" , res)
-      if (res.ok) {
-        const data = await res.json();
-        console.log('Product added:', data);
-        setForm({
-          product_name: '',
-          product_price: 0,
-          product_oldprice: 0,
-          product_description: '',
-          product_category: '',
-          product_brand: '',
-          stock: 0,
-        });
-      } else {
-        console.error('Failed to add product');
+
+      if (!res.ok) {
+        throw new Error('Failed to add product');
       }
+
+      const data = await res.json();
+      console.log('Product added:', data);
+      setForm({
+        product_name: '',
+        product_price: 0,
+        product_oldprice: 0,
+        product_description: '',
+        product_category: '',
+        product_brand: '',
+        stock: 0,
+        discount : 0,
+        images: [],
+      });
     } catch (error) {
       console.error('Failed to add product', error);
     }
@@ -118,6 +132,15 @@ console.log(formData)
         onChange={handleChange}
         required
       />
+      <input
+        type="number"
+        name="discount"
+        placeholder="discount"
+        value={form.discount}
+        onChange={handleChange}
+        required
+      />
+      <ImageUpload onImageUpload={handleImageUpload} />
       <button type="submit">Add Product</button>
     </form>
   );

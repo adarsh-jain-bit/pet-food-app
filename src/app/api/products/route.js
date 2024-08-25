@@ -19,13 +19,15 @@ export async function POST(req) {
   await connectToDatabase();
   
   try {
-    console.log("req", req)
     const formData = await req.formData();
     const body = Object.fromEntries(formData.entries());
-    
+    const images = formData.getAll('images');
+    body.images = images;
+          console.log(images)
     const validatedData = await ProductValidate.validate(body);
     
     const newProduct = new Product(validatedData);
+    console.log("newProduct" , newProduct)
     await newProduct.save();
     
     return NextResponse.json({ message: 'Product added successfully' });
@@ -33,3 +35,4 @@ export async function POST(req) {
     return NextResponse.json({ message: error.message || 'Internal Server Error' });
   }
 }
+
