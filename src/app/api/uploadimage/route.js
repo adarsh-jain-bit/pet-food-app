@@ -2,18 +2,14 @@
 import cloudinary from '../../../utiles/cloudnary';
 import { NextResponse } from 'next/server';
 
-export const config = {
-  api: {
-    bodyParser: {
-      sizeLimit: '10mb', // Adjust if needed
-    },
-  },
-};
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+export const maxDuration = 60;
 
 export async function POST(req) {
   try {
-    const body = await req.json(); // Parse the JSON body
-    const { data } = body; // Extract the base64 string from the request body
+    const body = await req.json(); 
+    const { data } = body; 
 
     if (!data) {
       return NextResponse.json({ error: 'No data found in the request body' }, { status: 400 });

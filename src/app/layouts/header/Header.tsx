@@ -1,5 +1,5 @@
 "use client"
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -114,6 +114,25 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 const [cartOpen, setCartOpen] = useState(false);
 const [cartItems, setCartItems] = useState<CartItemType[]>([]);
 
+
+//   useEffect(() => {
+//     async function fetchProducts() {
+//       try {
+//         const response = await fetch('/api/products'); 
+//         if (!response.ok) {
+//           throw new Error('Network response was not ok');
+//         }
+//         const data = await response.json();
+//         setCartItems(data.data)
+//       } catch (error) {
+//       }
+//     }
+
+//     fetchProducts();
+//   }, []);
+
+
+// console.log(cartItems)
 const getTotalItems = (items: CartItemType[]) =>
   items.reduce((acc, item) => acc + item.amount, 0);
 
@@ -273,7 +292,7 @@ const handleRemoveFromCart = (id: number) => {
       <>
       
       <Stack display="flex" alignItems="center">
-      <Link href={"/account/login"}><AccountCircleIcon fontSize='large' sx={{color:COLORS.PRIMARY.main}} /></Link>
+      <Link href={"/account/login"} style={{zIndex : 2222}}><AccountCircleIcon fontSize='large' sx={{color:COLORS.PRIMARY.main}} /></Link>
       <Box  style={styles.StyledButton} onClick={() => setCartOpen(true)}>
         <Badge badgeContent={getTotalItems(cartItems)} color="error">
           <ShoppingCartIcon sx={{color : COLORS.PRIMARY.main}} fontSize='large' />
@@ -298,7 +317,7 @@ const handleRemoveFromCart = (id: number) => {
 
   </AppBar>
 
-  {navLinkValue && <SimpleBackdrop open={open} handleClose={handleClose}> <MegaMenu page={navLinkValue}/>  </SimpleBackdrop>}
+  {navLinkValue && <SimpleBackdrop open={open} handleClose={handleClose} > <MegaMenu page={navLinkValue}/>  </SimpleBackdrop>}
  
   </>
   )

@@ -4,7 +4,7 @@ import React,{useState} from 'react'
 import {LoginWrapper} from "./login.style"
 import { MuiTelInput } from 'mui-tel-input'
 import OTPButton from '@src/components/common/modal/OTPModal'
-const login = () => {
+const Login = () => {
   const [value, setValue] = useState('')
  
   const handleChange = (newValue : string) => {
@@ -23,4 +23,4 @@ const login = () => {
   )
 }
 
-export default login
+export default Login

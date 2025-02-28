@@ -1,18 +1,35 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Card from "@src/components/common/Cart";
 import { Button, Grid, Typography } from "@mui/material";
 import { COLORS } from '@src/lib/constants/colors';
 
 const BrandSection = () => {
-    let cardData = [1,2,3,4,5]
+  const [product , setProduct] = useState([])
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const response = await fetch('/api/products'); 
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setProduct(data.data)
+      } catch (error) {
+      }
+    }
+
+    fetchProducts();
+  }, []);
+
+   console.log(product)
   return (
    <>
    <Typography variant='h1' textAlign="center">Sheba: Irresistible Delights for Your Cat</Typography>
     <Grid container spacing={2} justifyContent="center" mt={1}>
-   {cardData.map(() => (
+   {product.slice(0, 5).map((item) => (
     <>
      <Grid item xs={2}>
-     <Card/>
+     <Card datax={item}/>
    </Grid>
     </>
    ))}

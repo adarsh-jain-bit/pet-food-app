@@ -1,6 +1,7 @@
 "use client";
 import { useState } from 'react';
 import ImageUpload from './ImageUpload';
+import { toast } from 'react-toastify';
 
 export default function Form() {
   const [form, setForm] = useState({
@@ -53,10 +54,16 @@ console.log(form)
       });
 
       if (!res.ok) {
+        toast.error(`Failed to add product`, {
+          position: "bottom-left",
+        });
         throw new Error('Failed to add product');
       }
 
       const data = await res.json();
+      toast.success(`Product added Successfully`, {
+        position: "bottom-left",
+      });
       console.log('Product added:', data);
       setForm({
         product_name: '',
@@ -70,6 +77,9 @@ console.log(form)
         images: [],
       });
     } catch (error) {
+      toast.error(`Failed to add product`, {
+        position: "bottom-left",
+      });
       console.error('Failed to add product', error);
     }
   };

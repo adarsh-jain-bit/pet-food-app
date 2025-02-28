@@ -8,7 +8,7 @@ export const styles = {
     swiperSlide  : {  
         fontSize: "18px",
         background: "#fff",
-      maxHeight : "50vh",
+      // maxHeight : "50vh",
         display: "flex",
         width : "100%" ,
         justifyContent: "center",

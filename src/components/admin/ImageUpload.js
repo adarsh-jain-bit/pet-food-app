@@ -1,6 +1,7 @@
 "use client"
 import { useState } from 'react';
 import Image from 'next/image';
+import { toast } from 'react-toastify';
 
 const ImageUpload = ({onImageUpload}) => {
   const [file, setFile] = useState(null);
@@ -31,12 +32,21 @@ const ImageUpload = ({onImageUpload}) => {
 
       if (response.ok) {
         setImageUrl(data.url);
+        toast.success("image uploaded!", {
+          position: "bottom-left",
+        });
         onImageUpload(data.url)
       } else {
         console.error('Error uploading the file:', data.error);
+        toast.error(`Error uploading the file: ${data.error}`, {
+          position: "bottom-left",
+        });
       }
     } catch (error) {
       console.error('Error uploading the file:', error);
+      toast.error(`Error uploading the file: ${data.error}`, {
+        position: "bottom-left",
+      });
     }
     
   };
